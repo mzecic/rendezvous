@@ -5,10 +5,12 @@
 
 {% for listing in listings %}
   <div class="card">
-    <div class="card-content">
-      <span class="card-title">{{ listing.title }}</span>
-      <p>Description: {{ listing.description }}</p>
-    </div>
+    <a href="{% url 'detail' listing.id %}">
+      <div class="card-content">
+        <span class="card-title">{{ listing.title }}</span>
+        <p>Description: {{ listing.description|linebreaks }}</p>
+      </div>
+    </a>
   </div>
 {% endfor %}
 
