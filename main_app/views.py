@@ -1,5 +1,17 @@
 from django.shortcuts import render
 
+# Test listings data
+class Listing:  # Note that parens are optional if not inheriting from another class
+  def __init__(self, title, description):
+    self.title = title
+    self.description = description
+
+listings = [
+  Listing('title1', 'description1'),
+  Listing('title2', 'description2'),
+  Listing('title3', 'description3'),
+  ]
+
 # Add the following import
 from django.http import HttpResponse
 
@@ -12,3 +24,6 @@ def about(request):
 
 def about(request):
   return render(request, 'about.html')
+
+def listings_index(request):
+  return render(request, 'listings/index.html', { 'listings': listings })
