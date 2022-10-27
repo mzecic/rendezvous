@@ -1,5 +1,9 @@
 from django.shortcuts import render
 from .models import Listing
+from django.shortcuts import render
+from django.views.generic.edit import CreateView
+from .models import Listing
+
 # Test listings data
 
 
@@ -29,3 +33,8 @@ def listings_index(request):
 def listings_detail(request, listing_id):
   listing = Listing.objects.get(id=listing_id)
   return render(request, 'listings/detail.html', { 'listing': listing})
+
+class ListingCreate(CreateView):
+  model = Listing
+  fields = ['title', 'description']
+  success_url = '/listings/'
