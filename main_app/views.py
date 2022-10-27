@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Listing
 from django.shortcuts import render
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Listing
 
 # Test listings data
@@ -39,8 +39,11 @@ class ListingCreate(CreateView):
   fields = ['title', 'description']
   success_url = '/listings/'
 
-class ListingUpdate(CreateView):
-  pass
+class ListingUpdate(UpdateView):
+  model = Listing
+  fields = ['title', 'description']
 
-class ListingDelete(CreateView):
-  pass
+class ListingDelete(DeleteView):
+  model = Listing
+  success_url = '/listings/'
+
