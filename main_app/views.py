@@ -38,3 +38,9 @@ class ListingCreate(CreateView):
   model = Listing
   fields = ['title', 'description']
   success_url = '/listings/'
+
+class ListingUpdate(CreateView):
+  pass
+
+class ListingDelete(CreateView):
+  pass
