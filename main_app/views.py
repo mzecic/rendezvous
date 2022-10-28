@@ -47,7 +47,7 @@ class ListingCreate(LoginRequiredMixin, CreateView):
 
 class ListingUpdate(LoginRequiredMixin, UpdateView):
   model = Listing
-  fields = ['title', 'description']
+  fields = ['title', 'description', 'price']
 
 
 class ListingDelete(LoginRequiredMixin, DeleteView):

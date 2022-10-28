@@ -8,12 +8,19 @@
   <title>Rendezvous</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="{% static 'js/materialize.js' %}"> </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>
 <body>
   <header class="navbar-fixed">
+    <ul id="dropdown1" class="dropdown-content">
+      <li><a href="{% url 'logout' %}">Log Out</a></li>
+      <li><a href="#!">Edit</a></li>
+      <li><a href="{% url 'my_listings' %}">View My Listings</a></li>
+    </ul>
     <nav>
-      <div class="nav-wrapper">
+      <div class="nav-wrapper green lighten-1">
         <ul>
           <li><a href="/" class="left brand-logo">&nbsp;&nbsp;Rendezvous</a></li>
         </ul>
@@ -21,9 +28,8 @@
           <li><a href="{% url 'about' %}">About</a></li>
           {% if user.is_authenticated %}
             <li><a href="{% url 'listings_create' %}">Add Listing</a></li>
-            <li><a href="{% url 'my_listings' %}">View My Listings</a></li>
             <li><a href="{% url 'index' %}">View All Listings</a></li>
-            <li><a href="{% url 'logout' %}">Log Out</a></li>
+            <li><a class="dropdown-trigger" href="#!" data-target="dropdown1"><img style="width: 30px; height: 30px;"id="avatar"src="https://assets.webiconspng.com/uploads/2016/11/account_avatar_male_man_person_profile_user_icon_434194.png"><i class="material-icons right"></i></a></li>
           {% else %}
             <li><a href="{% url 'login' %}">Log In</a></li>
             <li><a href="{% url 'signup' %}">Sign Up</a></li>
@@ -36,8 +42,17 @@
     {% block content %}
     {% endblock %}
   </main>
-  <footer class="page-footer">
+  <footer class="page-footer green lighten-1">
     <div class="right">All Rights Reserved, &copy; 2022 Rendezvous &nbsp;</div>
   </footer>
-</body>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var dropdown1 = document.querySelector('.dropdown-trigger');
+      var dropdownOptions = {
+          'closeOnClick': true,
+          'hover':true
+      }
+      var instanceDropdown1 = M.Dropdown.init(dropdown1, dropdownOptions);
+  });
+  </script>
 </html>
