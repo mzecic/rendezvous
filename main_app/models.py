@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 class Listing(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=500)
+    price = models.FloatField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -16,4 +17,11 @@ class Listing(models.Model):
     def get_absolute_url(self):
         return reverse('detail', kwargs={'listing_id': self.id})
 
-    
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    location = models.CharField(max_length=1000)
+
+class Comment(models.Model):
+    content = models.TextField(max_length=300)
+    date = models.DateField('Comment Date')
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
