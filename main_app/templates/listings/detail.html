@@ -9,8 +9,10 @@
     <p>Description: {{ listing.description|linebreaks }}</p>
   </div>
   <div class="card-action">
-    <a href="{% url 'listings_update' listing.id %}">Edit</a>
-    <a href="{% url 'listings_delete' listing.id %}">Delete</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'listings_update' listing.id %}">Edit</a>
+      <a href="{% url 'listings_delete' listing.id %}">Delete</a>
+    {% endif %}
   </div>
 </div>
 
