@@ -9,4 +9,5 @@ urlpatterns = [
     path('listings/create/', views.ListingCreate.as_view(), name='listings_create'),
     path('listings/<int:pk>/update/', views.ListingUpdate.as_view(), name='listings_update'),
     path('listings/<int:pk>/delete/', views.ListingDelete.as_view(), name='listings_delete'),
+    path('accounts/signup/', views.signup, name='signup'),
 ]

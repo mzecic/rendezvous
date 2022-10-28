@@ -1,8 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Listing
 from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Listing
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Test listings data
 
@@ -13,15 +16,9 @@ from .models import Listing
 #   Listing('title3', 'description3'),
 #   ]
 
-# Add the following import
-from django.http import HttpResponse
-
 # Define the home view
 def home(request):
   return render(request, 'home.html')
-
-def about(request):
-    return HttpResponse('<h1>About the CatCollector</h1>')
 
 def about(request):
   return render(request, 'about.html')
@@ -34,16 +31,44 @@ def listings_detail(request, listing_id):
   listing = Listing.objects.get(id=listing_id)
   return render(request, 'listings/detail.html', { 'listing': listing})
 
-class ListingCreate(CreateView):
+
+class ListingCreate(LoginRequiredMixin, CreateView):
   model = Listing
   fields = ['title', 'description']
   success_url = '/listings/'
 
-class ListingUpdate(UpdateView):
+  def form_valid(self, form):
+        # Assign the logged in user (self.request.user)
+        form.instance.user = self.request.user
+        # Let the CreateView do its job as usual
+        return super().form_valid(form)
+
+
+class ListingUpdate(LoginRequiredMixin, UpdateView):
   model = Listing
   fields = ['title', 'description']
 
-class ListingDelete(DeleteView):
+
+class ListingDelete(LoginRequiredMixin, DeleteView):
   model = Listing
   success_url = '/listings/'
 
+
+def signup(request):
+  error_message = ''
+  if request.method == 'POST':
+    # This is how to create a 'user' form object
+    # that includes the data from the browser
+    form = UserCreationForm(request.POST)
+    if form.is_valid():
+      # This will add the user to the database
+      user = form.save()
+      # This is how we log a user in via code
+      login(request, user)
+      return redirect('index')
+    else:
+      error_message = 'Invalid sign up - try again'
+  # A bad POST or a GET request, so render signup.html with an empty form
+  form = UserCreationForm()
+  context = {'form': form, 'error_message': error_message}
+  return render(request, 'registration/signup.html', context)
