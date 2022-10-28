@@ -20,6 +20,23 @@
         {% endif %}
       </div>
     </div>
+    <div class="col s6">
+          {% for comment in listing.comment_set.all %}
+            <div>
+              <div>{{comment.date}}</div>
+              <div>{{comment.content}}</div>
+              <div>{{comment.commenter}}</div>
+            </div>
+          {% endfor %}
+    </div>
+    <div>
+        <div class="col s6">
+          <form action="{% url 'add_comment' listing.id %}" method="POST">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <input type="submit" class="btn" value="Add Comment">
+          </form>      
+        </div>
 </div>
 
 

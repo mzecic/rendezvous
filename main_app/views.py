@@ -6,6 +6,8 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import CommentForm
+from datetime import date
 
 # Test listings data
 
@@ -29,9 +31,23 @@ def listings_index(request):
 
 def listings_detail(request, listing_id):
   listing = Listing.objects.get(id=listing_id)
-  print('signed in user id', request.user.id, 'owner', listing.user.id)
-  return render(request, 'listings/detail.html', { 'listing': listing})
+  # print('signed in user id', request.user.id, 'owner', listing.user.id)
+  comment_form = CommentForm()
+  return render(request, 'listings/detail.html', { 'listing': listing, 'comment_form':comment_form})
 
+def add_comment(request, listing_id):
+   # create a ModelForm instance using the data in request.POST
+  form = CommentForm(request.POST)
+  # validate the form
+  if form.is_valid():
+    # don't save the form to the db until it
+    # has the cat_id assigned
+    new_comment = form.save(commit=False)
+    new_comment.listing_id = listing_id
+    new_comment.date = date.today()
+    new_comment.commenter_id = request.user.id
+    new_comment.save()
+  return redirect('detail', listing_id=listing_id)
 
 class ListingCreate(LoginRequiredMixin, CreateView):
   model = Listing
@@ -43,7 +59,6 @@ class ListingCreate(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         # Let the CreateView do its job as usual
         return super().form_valid(form)
-
 
 class ListingUpdate(LoginRequiredMixin, UpdateView):
   model = Listing
