@@ -21,7 +21,8 @@
           <li><a href="{% url 'about' %}">About</a></li>
           {% if user.is_authenticated %}
             <li><a href="{% url 'listings_create' %}">Add Listing</a></li>
-            <li><a href="{% url 'index' %}">View All My Listings</a></li>
+            <li><a href="{% url 'my_listings' %}">View My Listings</a></li>
+            <li><a href="{% url 'index' %}">View All Listings</a></li>
             <li><a href="{% url 'logout' %}">Log Out</a></li>
           {% else %}
             <li><a href="{% url 'login' %}">Log In</a></li>

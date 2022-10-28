@@ -29,12 +29,13 @@ def listings_index(request):
 
 def listings_detail(request, listing_id):
   listing = Listing.objects.get(id=listing_id)
+  print('signed in user id', request.user.id, 'owner', listing.user.id)
   return render(request, 'listings/detail.html', { 'listing': listing})
 
 
 class ListingCreate(LoginRequiredMixin, CreateView):
   model = Listing
-  fields = ['title', 'description']
+  fields = ['title', 'description', 'price']
   success_url = '/listings/'
 
   def form_valid(self, form):
