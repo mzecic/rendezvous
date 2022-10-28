@@ -11,4 +11,6 @@ urlpatterns = [
     path('listings/<int:pk>/update/', views.ListingUpdate.as_view(), name='listings_update'),
     path('listings/<int:pk>/delete/', views.ListingDelete.as_view(), name='listings_delete'),
     path('accounts/signup/', views.signup, name='signup'),
+    # path('listings/<int:listing_id>/add_comment/<int:commenter_id>', views.add_comment, name='add_comment'),
+    path('listings/<int:listing_id>/add_comment/', views.add_comment, name='add_comment'),
 ]
