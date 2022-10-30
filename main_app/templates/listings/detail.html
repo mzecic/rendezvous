@@ -50,6 +50,12 @@
               <br>
             </p>
             <span href="#!" class="secondary-content"><i class="material-icons">{{comment.date}}</i></span>
+            {% if request.user.is_superuser %}
+             <form method="POST" action="{% url 'delete_comment' listing.id comment.id%}">
+              {% csrf_token %}
+              <button class="btn red lighten-1"> Delete Comment </button>
+             </form>
+             {% endif %}
           </li>
         {% endfor %}
       </ul>
