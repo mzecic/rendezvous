@@ -13,4 +13,5 @@ urlpatterns = [
     path('accounts/signup/', views.signup, name='signup'),
     # path('listings/<int:listing_id>/add_comment/<int:commenter_id>', views.add_comment, name='add_comment'),
     path('listings/<int:listing_id>/add_comment/', views.add_comment, name='add_comment'),
+    path('listings/<int:listing_id>/add_photo/', views.add_photo, name='add_photo'),
 ]
