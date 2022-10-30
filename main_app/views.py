@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from .models import Listing, Photo
+from django.shortcuts import render, redirect, reverse
+from .models import Listing, Photo, Comment
 from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login
@@ -72,7 +72,6 @@ class ListingDelete(LoginRequiredMixin, DeleteView):
   model = Listing
   success_url = '/listings/'
 
-
 def signup(request):
   error_message = ''
   if request.method == 'POST':
@@ -111,3 +110,10 @@ def add_photo(request, listing_id):
             print('An error occurred uploading file to S3')
             print(e)
     return redirect('detail', listing_id=listing_id)
+
+def delete_comment(request, comment_id, listing_id):
+  # comment = get_object_or_404(Comment, comment=comment_id)
+  if request.user.is_superuser:
+    Comment.objects.get(pk=comment_id).delete()
+
+  return redirect(reverse('detail', args=(listing_id,)))
