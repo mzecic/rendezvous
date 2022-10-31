@@ -41,3 +41,14 @@ ul.left {
 .menu-icon:first-child {
   margin-top: 50%;
 }
+
+img.responsive-img {
+  margin: auto;
+  width: 100%;
+  height: 100%;
+}
+
+img.activator {
+  width: 100%;
+  height: 100%;
+}
