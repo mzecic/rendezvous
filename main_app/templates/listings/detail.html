@@ -1,18 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
-
+{% load static %}
 <h1>Listing Details</h1>
 
 <div class="card">
     <div class="card-image waves-effect waves-block waves-light">
-
-    </div>
-
-    {% comment %} {% for photo in listing.photo_set.all %}
-    <img class="ractivator" src="{{photo.url}}">
-  {% empty %}
-    <div class="card-panel teal-text center-align">No Photos Uploaded</div>
-  {% endfor %} {% endcomment %}
+</div>
 
   {% for photo in listing.photo_set.all %}
     <img class="responsive-img card-panel" src="{{photo.url}}" alt="Listing Photo">
@@ -44,19 +37,18 @@
       <ul class="collection">
         {% for comment in listing.comment_set.all %}
           <li class="collection-item avatar">
-            <img src="{%comment%} profile avatar {%endcomment%}" alt="" class="circle">
+            <img src="{% static '/img/user_placeholder_image.png' %}" alt="" class="circle">
             <span class="title">{{comment.commenter}}</span>
             <p>{{comment.content}}
-              <br>
             </p>
-            <span href="#!" class="secondary-content"><i class="material-icons">{{comment.date}}</i></span>
-            {% if request.user.is_superuser %}
-             <form method="POST" action="{% url 'delete_comment' listing.id comment.id%}">
-              {% csrf_token %}
-              <button class="btn red lighten-1"> Delete Comment </button>
-             </form>
-             {% endif %}
           </li>
+          <span id="comment-date" class="secondary-content">{{comment.date}}</span>
+          {% if request.user.is_superuser %}
+           <form method="POST" action="{% url 'delete_comment' listing.id comment.id%}">
+            {% csrf_token %}
+            <button id="comment-delete" class="btn red lighten-1"> Delete Comment </button>
+           </form>
+           {% endif %}
         {% endfor %}
       </ul>
     </div>
