@@ -14,7 +14,7 @@ footer.page-footer {
   text-align: right;
 }
 
-img#avatar {
+.avatar {
   margin: 35% 25%;
   width: 30px !important;
   height: 30px !important;
