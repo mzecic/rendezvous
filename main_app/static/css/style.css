@@ -14,7 +14,12 @@ footer.page-footer {
   text-align: right;
 }
 
-.avatar {
+.comment-form {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#avatar-nav {
   margin: 35% 25%;
   width: 30px !important;
   height: 30px !important;
@@ -62,5 +67,5 @@ img.activator {
 }
 
 .comment {
-  white-space: nowrap;
+  margin: 5px 20px;
 }

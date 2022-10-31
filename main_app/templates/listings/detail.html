@@ -34,32 +34,33 @@
       </div>
     </div>
     <div class="col s6">
-      <ul class="collection">
-        {% for comment in listing.comment_set.all %}
-          <li class="collection-item avatar">
-            <img src="{% static '/img/user_placeholder_image.png' %}" alt="" class="circle">
-            <span class="title">{{comment.commenter}}</span>
-            <p class="comment">{{comment.content}}
-            </p>
-          </li>
-          <span id="comment-date" class="secondary-content">{{comment.date}}</span>
-          {% if request.user.is_superuser %}
-           <form method="POST" action="{% url 'delete_comment' listing.id comment.id%}">
+    </div>
+    <ul class="collection">
+      {% for comment in listing.comment_set.all %}
+      <li class="collection-item avatar">
+        <img src="{% static '/img/user_placeholder_image.png' %}" alt="" class="circle">
+        <span class="title">{{comment.commenter}}</span>
+        <p class="comment">{{comment.content}}
+        </p>
+        <span href="#!" class="secondary-content"><i class="material-icons">{{comment.date}}</i></span>
+        {% if request.user.is_superuser %}
+           <form class="comment-form" method="POST" action="{% url 'delete_comment' listing.id comment.id%}">
             {% csrf_token %}
             <button id="comment-delete" class="btn red lighten-1"> Delete Comment </button>
            </form>
            {% endif %}
-        {% endfor %}
-      </ul>
+      </li>
+      {% endfor %}
+    </ul>
+
+<div>
+    <div class="col s6">
+      <form action="{% url 'add_comment' listing.id %}" method="POST">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <input type="submit" class="btn" value="Add Comment">
+      </form>
     </div>
-    <div>
-        <div class="col s6">
-          <form action="{% url 'add_comment' listing.id %}" method="POST">
-            {% csrf_token %}
-            {{ comment_form.as_p }}
-            <input type="submit" class="btn" value="Add Comment">
-          </form>
-        </div>
 </div>
 
 
