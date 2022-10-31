@@ -60,3 +60,7 @@ img.activator {
 #comment-date {
   margin: 30px;
 }
+
+.comment {
+  white-space: nowrap;
+}
