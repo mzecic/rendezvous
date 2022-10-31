@@ -22,7 +22,7 @@ class Profile(models.Model):
     location = models.CharField(max_length=1000)
 
 class Comment(models.Model):
-    content = models.TextField(max_length=300)
+    content = models.TextField('Write a comment',max_length=300)
     date = models.DateField('Comment Date')
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
     commenter = models.ForeignKey(User, on_delete=models.CASCADE)
