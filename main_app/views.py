@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, reverse
-from .models import Listing, Photo, Comment, User
+from .models import Listing, Photo, Comment, User, Profile
 from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login
@@ -11,9 +11,16 @@ from datetime import date
 import uuid
 import boto3
 import os
+import environ
 #gmaps stuff
 import googlemaps
 from datetime import datetime
+import requests
+import json
+import pandas as pd
+import urllib.request
+import simplejson as json
+import pprint
 
 # Test listings data
 
@@ -84,6 +91,8 @@ def signup(request):
     if form.is_valid():
       # This will add the user to the database
       user = form.save()
+      profile = Profile.objects.create(user_id=user.id)
+      profile.save()
       # This is how we log a user in via code
       login(request, user)
       return redirect('index')
@@ -121,14 +130,35 @@ def delete_comment(request, comment_id, listing_id):
 
   return redirect(reverse('detail', args=(listing_id,)))
 
+
+def profile_edit(request, user_id):
+  user = User.objects.get(id=user_id)
+  profile = Profile.objects.get(user=user_id)
+  return render(request, 'profile/detail.html', {
+    'user': user,
+    'user': request.user,
+    'profile': profile
+  })
+
+# gmaps
 def maps_sandbox(request):
   g_api_key = os.environ['GOOGLE_API_KEY']
   gmaps = googlemaps.Client(key=g_api_key)
   # Geocoding an address
   geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
+  coordinates = geocode_result[0]["geometry"]["location"]
+
+  elements = []
+  for i in geocode_result[0]["address_components"]:
+    elements.append( i["long_name"] )
+
+  elements.append( str(coordinates['lat']) ) # convert to string to use `join`
+  elements.append( str(coordinates['lng']) ) # convert to string to use `join`
+
+  print (", ".join(elements))
   # Look up an address with reverse geocoding
   reverse_geocode_result = gmaps.reverse_geocode((40.714224, -73.961452))
-  
+
   # Request directions via public transit
   now = datetime.now()
   directions_result = gmaps.directions("Sydney Town Hall",
@@ -137,6 +167,6 @@ def maps_sandbox(request):
                                       departure_time=now)
 
   return render(request,'maps/sandbox.html',
-                {'geocode_result':geocode_result,
+                {'geocode_result': ", ".join(elements),
                 'reverse_geocode_result':reverse_geocode_result,
                 'directions_result':directions_result})

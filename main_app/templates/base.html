@@ -12,12 +12,16 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <link rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}">
   <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  <script src="">{% static 'js/index.ts' %}</script>
+  <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+  <script async defer src=https://maps.googleapis.com/maps/api/js?key={{g_api_key}}&callback=initMap"></script>
 </head>
 <body>
   <header class="navbar-fixed">
     <ul id="dropdown1" class="dropdown-content">
       <li><a href="{% url 'logout' %}">Log Out</a></li>
-      <li><a href="#!">Edit</a></li>
+      <li><a href="{% url 'profile_edit' user.id %}">Edit</a></li>
       <li><a href="{% url 'my_listings' %}">View My Listings</a></li>
     </ul>
     <nav>

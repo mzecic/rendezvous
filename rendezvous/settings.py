@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 import environ
 environ.Env()
 environ.Env.read_env()
@@ -35,6 +35,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django_google_maps',
     'main_app',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -130,3 +131,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/listings/'
 LOGOUT_REDIRECT_URL = '/'
+
+GOOGLE_MAPS_API_KEY = os.environ['GOOGLE_API_KEY']
