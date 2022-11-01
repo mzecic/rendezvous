@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form action="">
+    {% csrf_token %}
+    <label name="address">Address: </label>
+    <input name="address"></input>
+    <button type="submit">Submit</button>
+</form>
+
+<p>{{ profile.user }}</p>
+
+{% endblock %}

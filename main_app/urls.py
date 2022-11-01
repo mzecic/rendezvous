@@ -15,5 +15,6 @@ urlpatterns = [
     path('listings/<int:listing_id>/add_comment/', views.add_comment, name='add_comment'),
     path('listings/<int:listing_id>/add_photo/', views.add_photo, name='add_photo'),
     path('listings/<int:listing_id>/delete_comment/<int:comment_id>', views.delete_comment, name='delete_comment'),
-    path('maps/', views.maps_sandbox, name='maps_sandbox')
+    path('maps/', views.maps_sandbox, name='maps_sandbox'),
+    path('profile/<user_id>/', views.profile_edit, name="profile_edit")
 ]

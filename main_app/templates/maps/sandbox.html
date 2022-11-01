@@ -18,5 +18,11 @@
 <hr>
 {% comment %}
 {% endcomment %}
+<script>
+    let jsonObj = stringify({{ geocode_result }})
+    for (result in jsonObj) {
+        console.log(result)
+    }
 
+</script>
 {% endblock %}
