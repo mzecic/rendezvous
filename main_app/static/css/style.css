@@ -69,3 +69,8 @@ img.activator {
 .comment {
   margin: 5px 20px;
 }
+
+#map {
+  width: 300px;
+  height: 300px;
+}

@@ -20,6 +20,11 @@ class Listing(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     location = models.CharField(max_length=1000, blank=True)
+    address_line_1 = models.CharField(max_length=100, blank=True)
+    city = models.CharField(max_length=100, blank=True)
+    state = models.CharField(max_length=2, blank=True)
+    postal_code = models.IntegerField(blank=True)
+    country = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return f'{self.user} - {self.location}'

@@ -8,7 +8,6 @@
 <hr>
 <H2>GeoCode Result</H2>
 <div>{{ geocode_result }}</div>
-<div>{{geocode_result.formatted_address}} Anything? </div>
 <hr>
 <H2>Reverse GeoCode Result</H2>
 <div>{{ reverse_geocode_result }}</div>
@@ -16,13 +15,6 @@
 <H2>Directions Result</H2>
 <div>{{ directions_result }}</div>
 <hr>
-{% comment %}
-{% endcomment %}
-<script>
-    let jsonObj = stringify({{ geocode_result }})
-    for (result in jsonObj) {
-        console.log(result)
-    }
 
-</script>
+
 {% endblock %}

@@ -11,6 +11,7 @@ from datetime import date
 import uuid
 import boto3
 import os
+import environ
 #gmaps stuff
 import googlemaps
 from datetime import datetime
@@ -145,7 +146,16 @@ def maps_sandbox(request):
   gmaps = googlemaps.Client(key=g_api_key)
   # Geocoding an address
   geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
-  print(pprint.pprint((geocode_result)))
+  coordinates = geocode_result[0]["geometry"]["location"]
+
+  elements = []
+  for i in geocode_result[0]["address_components"]:
+    elements.append( i["long_name"] )
+
+  elements.append( str(coordinates['lat']) ) # convert to string to use `join`
+  elements.append( str(coordinates['lng']) ) # convert to string to use `join`
+
+  print (", ".join(elements))
   # Look up an address with reverse geocoding
   reverse_geocode_result = gmaps.reverse_geocode((40.714224, -73.961452))
 
@@ -157,6 +167,6 @@ def maps_sandbox(request):
                                       departure_time=now)
 
   return render(request,'maps/sandbox.html',
-                {'geocode_result': pprint.pprint(geocode_result),
+                {'geocode_result': ", ".join(elements),
                 'reverse_geocode_result':reverse_geocode_result,
                 'directions_result':directions_result})
