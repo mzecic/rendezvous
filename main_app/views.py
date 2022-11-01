@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, reverse
-from .models import Listing, Photo, Comment
+from .models import Listing, Photo, Comment, User
 from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login
@@ -11,6 +11,9 @@ from datetime import date
 import uuid
 import boto3
 import os
+#gmaps stuff
+import googlemaps
+from datetime import datetime
 
 # Test listings data
 
@@ -117,3 +120,23 @@ def delete_comment(request, comment_id, listing_id):
     Comment.objects.get(pk=comment_id).delete()
 
   return redirect(reverse('detail', args=(listing_id,)))
+
+def maps_sandbox(request):
+  g_api_key = os.environ['GOOGLE_API_KEY']
+  gmaps = googlemaps.Client(key=g_api_key)
+  # Geocoding an address
+  geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
+  # Look up an address with reverse geocoding
+  reverse_geocode_result = gmaps.reverse_geocode((40.714224, -73.961452))
+  
+  # Request directions via public transit
+  now = datetime.now()
+  directions_result = gmaps.directions("Sydney Town Hall",
+                                      "Parramatta, NSW",
+                                      mode="transit",
+                                      departure_time=now)
+
+  return render(request,'maps/sandbox.html',
+                {'geocode_result':geocode_result,
+                'reverse_geocode_result':reverse_geocode_result,
+                'directions_result':directions_result})
