@@ -43,6 +43,10 @@ def listings_index(request):
     listings = Listing.objects.all()
     return render(request, 'listings/index.html', { 'listings': listings })
 
+def my_listings(request):
+    listings = Listing.objects.all()
+    return render(request, 'listings/my_listings.html', {'listings': listings })
+
 def listings_detail(request, listing_id):
   listing = Listing.objects.get(id=listing_id)
   # print('signed in user id', request.user.id, 'owner', listing.user.id)
@@ -156,7 +160,7 @@ def maps_sandbox(request):
 
   elements.append( str(coordinates['lat']) ) # convert to string to use `join`
   elements.append( str(coordinates['lng']) ) # convert to string to use `join`
-  
+
   lat = str(coordinates['lat'])
   lng = str(coordinates['lng'])
   full_address = ", ".join(elements)
@@ -174,7 +178,7 @@ def maps_sandbox(request):
                 {
                 # 'geocode_result': ", ".join(elements),
                 # 'reverse_geocode_result':reverse_geocode_result,
-                # 'directions_result':directions_result, 
+                # 'directions_result':directions_result,
                 'lat':lat,
                 'lng':lng,
                 'full_address':full_address,
