@@ -80,7 +80,7 @@ class ListingCreate(LoginRequiredMixin, CreateView):
 
 class ListingUpdate(LoginRequiredMixin, UpdateView):
   model = Listing
-  fields = ['title', 'description', 'price']
+  fields = ['title', 'description', 'price',]
 
 
 class ListingDelete(LoginRequiredMixin, DeleteView):
@@ -127,6 +127,16 @@ def add_photo(request, listing_id):
             print('An error occurred uploading file to S3')
             print(e)
     return redirect('detail', listing_id=listing_id)
+
+def edit_photos(request, listing_id):
+  listing = Listing.objects.get(id=listing_id)
+  photos = Photo.objects.filter(listing=listing_id)
+  return render(request, 'listings/edit_photos.html', {'photos': photos, 'listing': listing})
+
+def delete_photo(request, photo_id, listing_id):
+  Photo.objects.get(pk=photo_id).delete()
+
+  return redirect(reverse('edit_photos', args=(listing_id,)))
 
 def delete_comment(request, comment_id, listing_id):
   # comment = get_object_or_404(Comment, comment=comment_id)

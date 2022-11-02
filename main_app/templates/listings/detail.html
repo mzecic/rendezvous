@@ -9,17 +9,17 @@
 
   <div class="slider">
     <ul class="slides">
+      {% if listing.photo_set.count %}
       {% for photo in listing.photo_set.all %}
-      <li>
-        <img class="materialboxed" src="{{photo.url}}">
-      </li>
-      {% empty %}
-      <li>
-        <div class="caption center-align">
-          <h5 class="light grey-text text-lighten-3">No Photos Uploaded</h5>
-        </div>
-      </li>
-      {% endfor %}
+        <li>
+          <img class="materialboxed" src="{{photo.url}}">
+        </li>
+        {% endfor %}
+      {% else %}
+        <li>
+          <img class="materialboxed" src="{% static 'img/no_image.jpeg' %}">
+        </li>
+      {% endif %}
     </ul>
   </div>
 {% if request.user == listing.user %}
@@ -28,6 +28,7 @@
     <input type="file" name="photo-file">
     <br><br>
     <input type="submit" class="btn" value="Upload Photo">
+    <span><a class="btn" href="{% url 'edit_photos' listing.id %}">EDIT PHOTOS</a></span>
 </form>
 {% endif %}
 
