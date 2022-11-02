@@ -146,7 +146,8 @@ def maps_sandbox(request):
   g_api_key = os.environ['GOOGLE_API_KEY']
   gmaps = googlemaps.Client(key=g_api_key)
   # Geocoding an address
-  geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
+  # geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
+  geocode_result = gmaps.geocode('1858 Ashland Ave, St. Paul, MN')
   coordinates = geocode_result[0]["geometry"]["location"]
 
   elements = []
@@ -155,19 +156,26 @@ def maps_sandbox(request):
 
   elements.append( str(coordinates['lat']) ) # convert to string to use `join`
   elements.append( str(coordinates['lng']) ) # convert to string to use `join`
-
-  print (", ".join(elements))
+  
+  lat = str(coordinates['lat'])
+  lng = str(coordinates['lng'])
+  full_address = ", ".join(elements)
   # Look up an address with reverse geocoding
-  reverse_geocode_result = gmaps.reverse_geocode((40.714224, -73.961452))
+  # reverse_geocode_result = gmaps.reverse_geocode((40.714224, -73.961452))
 
   # Request directions via public transit
-  now = datetime.now()
-  directions_result = gmaps.directions("Sydney Town Hall",
-                                      "Parramatta, NSW",
-                                      mode="transit",
-                                      departure_time=now)
+  # now = datetime.now()
+  # directions_result = gmaps.directions("Sydney Town Hall",
+  #                                     "Parramatta, NSW",
+  #                                     mode="transit",
+  #                                     departure_time=now)
 
   return render(request,'maps/sandbox.html',
-                {'geocode_result': ", ".join(elements),
-                'reverse_geocode_result':reverse_geocode_result,
-                'directions_result':directions_result})
+                {
+                # 'geocode_result': ", ".join(elements),
+                # 'reverse_geocode_result':reverse_geocode_result,
+                # 'directions_result':directions_result, 
+                'lat':lat,
+                'lng':lng,
+                'full_address':full_address,
+                'g_api_key':g_api_key})
