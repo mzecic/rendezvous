@@ -11,16 +11,17 @@ from datetime import date
 import uuid
 import boto3
 import os
-import environ
 #gmaps stuff
 import googlemaps
 from datetime import datetime
-import requests
-import json
-import pandas as pd
-import urllib.request
-import simplejson as json
-import pprint
+
+# import requests
+# import json
+# import pandas as pd
+# import urllib.request
+# import simplejson as json
+# import pprint
+# import environ
 
 # Test listings data
 
