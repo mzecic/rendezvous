@@ -4,17 +4,62 @@
 
 <h1>Gmaps Rendezvous Sandbox</h1>
 
+{% comment %}
+    <!-- <hr>
+    <H2>GeoCode Result</H2>
+    <div>{{ geocode_result }}</div>
+    <hr>
+    <H2>Reverse GeoCode Result</H2>
+    <div>{{ reverse_geocode_result }}</div>
+    <hr>
+    <H2>Directions Result</H2>
+    <div>{{ directions_result }}</div>
+    <hr> -->
+{% endcomment %}
+<!-- <form id="mapCenterForm">
+    Lat: <input type="text" id="lat" />
+    <br />
+    Lng: <input type="text" id="lng" />
+    <br />
+    <input type="submit" value="Center map" />
+</form>
+<br /> -->
+<!-- <div id="map-canvas"></div> -->
+    <script>
+    // var lat=51.508742;
+    // var lng=8.120850;
+    var lat={{lat}};
+    var lng={{lng}};
 
-<hr>
-<H2>GeoCode Result</H2>
-<div>{{ geocode_result }}</div>
-<hr>
-<H2>Reverse GeoCode Result</H2>
-<div>{{ reverse_geocode_result }}</div>
-<hr>
-<H2>Directions Result</H2>
-<div>{{ directions_result }}</div>
-<hr>
+    var myCenter=new google.maps.LatLng(lat,lng);
+
+
+    function initialize()
+    {
+    var mapProp = {
+      center:myCenter,
+      zoom:5,
+      mapTypeId:google.maps.MapTypeId.ROADMAP
+      };
+
+    var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+    var marker=new google.maps.Marker({
+      position:myCenter,
+      });
+
+    marker.setMap(map);
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+
+
+    <body>
+        <div>Address: {{full_address}}</div>
+        <div id="googleMap" style="width:500px;height:380px;"></div>
+
+    </body>
 
 
 {% endblock %}
