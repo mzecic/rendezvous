@@ -10,8 +10,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <link rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}">
   <script async defer src="https://maps.googleapis.com/maps/api/js?key={{g_api_key}}&callback=initMap"></script>
-  
-  
+
+
   <!-- Which of these below do we still need? -->
   <script src="{% static 'js/materialize.js' %}"> </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -76,18 +76,32 @@
     <div class="right">All Rights Reserved, &copy; 2022 Rendezvous &nbsp;</div>
   </footer>
   <script>
+
+
     document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.slider');
+      var sliderOptions = {
+        'height': 650,
+      }
+      var instances = M.Slider.init(elems, sliderOptions);
+
       var elems = document.querySelectorAll('.sidenav');
       var options = {
         'closeOnClick': true,
       }
       var instances = M.Sidenav.init(elems, options);
 
+      var elems = document.querySelectorAll('.materialboxed');
+      var boxedOptions = {
+        'originalHeight': 650,
+      }
+      var instances = M.Materialbox.init(elems, boxedOptions);
+
       var dropdown1 = document.querySelector('.dropdown-trigger');
       var dropdownOptions = {
-          'closeOnClick': true,
-          'hover':true
-      }
+        'closeOnClick': true,
+        'hover':true
+    }
       var instanceDropdown1 = M.Dropdown.init(dropdown1, dropdownOptions);
   });
   </script>

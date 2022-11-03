@@ -7,24 +7,36 @@
     <div class="card-image waves-effect waves-block waves-light">
 </div>
 
-  {% for photo in listing.photo_set.all %}
-    <img class="responsive-img card-panel" src="{{photo.url}}" alt="Listing Photo">
-  {% empty %}
-    <div class="card-panel teal-text center-align">No Photos Uploaded</div>
-  {% endfor %}
-
+  <div class="slider">
+    <ul class="slides">
+      {% if listing.photo_set.count %}
+      {% for photo in listing.photo_set.all %}
+        <li>
+          <img class="materialboxed" src="{{photo.url}}">
+        </li>
+        {% endfor %}
+      {% else %}
+        <li>
+          <img class="materialboxed" src="{% static 'img/no_image.jpeg' %}">
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+{% if request.user == listing.user %}
 <form action="{% url 'add_photo' listing.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
     {% csrf_token %}
     <input type="file" name="photo-file">
     <br><br>
     <input type="submit" class="btn" value="Upload Photo">
+    <span><a class="btn" href="{% url 'edit_photos' listing.id %}">EDIT PHOTOS</a></span>
 </form>
+{% endif %}
 
 
     <div class="card-content">
-        <p>{{ listing.description }}</p>
-        <p>Listing Owner: {{ listing.user }}</p>
+        <p>Description: <br> {{ listing.description }}</p>
         <p>Price: ${{ listing.price }}</p>
+        <p>Listing Owner: {{ listing.user }}</p>
     </div>
      <div class="card-action">
         {% if request.user.id == listing.user.id %}

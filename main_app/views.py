@@ -43,6 +43,10 @@ def listings_index(request):
     listings = Listing.objects.all()
     return render(request, 'listings/index.html', { 'listings': listings })
 
+def my_listings(request):
+    listings = Listing.objects.all()
+    return render(request, 'listings/my_listings.html', {'listings': listings })
+
 def listings_detail(request, listing_id):
   listing = Listing.objects.get(id=listing_id)
   # print('signed in user id', request.user.id, 'owner', listing.user.id)
@@ -76,7 +80,7 @@ class ListingCreate(LoginRequiredMixin, CreateView):
 
 class ListingUpdate(LoginRequiredMixin, UpdateView):
   model = Listing
-  fields = ['title', 'description', 'price']
+  fields = ['title', 'description', 'price',]
 
 
 class ListingDelete(LoginRequiredMixin, DeleteView):
@@ -124,6 +128,16 @@ def add_photo(request, listing_id):
             print(e)
     return redirect('detail', listing_id=listing_id)
 
+def edit_photos(request, listing_id):
+  listing = Listing.objects.get(id=listing_id)
+  photos = Photo.objects.filter(listing=listing_id)
+  return render(request, 'listings/edit_photos.html', {'photos': photos, 'listing': listing})
+
+def delete_photo(request, photo_id, listing_id):
+  Photo.objects.get(pk=photo_id).delete()
+
+  return redirect(reverse('edit_photos', args=(listing_id,)))
+
 def delete_comment(request, comment_id, listing_id):
   # comment = get_object_or_404(Comment, comment=comment_id)
   if request.user.is_superuser:
@@ -156,7 +170,7 @@ def maps_sandbox(request):
 
   elements.append( str(coordinates['lat']) ) # convert to string to use `join`
   elements.append( str(coordinates['lng']) ) # convert to string to use `join`
-  
+
   lat = str(coordinates['lat'])
   lng = str(coordinates['lng'])
   full_address = ", ".join(elements)
@@ -174,7 +188,7 @@ def maps_sandbox(request):
                 {
                 # 'geocode_result': ", ".join(elements),
                 # 'reverse_geocode_result':reverse_geocode_result,
-                # 'directions_result':directions_result, 
+                # 'directions_result':directions_result,
                 'lat':lat,
                 'lng':lng,
                 'full_address':full_address,
