@@ -148,11 +148,12 @@ def delete_comment(request, comment_id, listing_id):
 
 def profile_edit(request, user_id):
   user = User.objects.get(id=user_id)
-  profile = Profile.objects.filter(user=user_id)
+  profile = Profile.objects.get(user=user_id)
   return render(request, 'profile/detail.html', {
     'user': user,
-    'user': request.user,
-    'profile': profile
+    # 'user': request.user,
+    'profile': profile,
+    'g_api_key':os.environ['GOOGLE_API_KEY']
   })
 
 # gmaps
@@ -163,7 +164,6 @@ def maps_sandbox(request):
   # geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
   geocode_result = gmaps.geocode('1858 Ashland Ave, St. Paul, MN')
   coordinates = geocode_result[0]["geometry"]["location"]
-
   elements = []
   for i in geocode_result[0]["address_components"]:
     elements.append( i["long_name"] )
@@ -174,16 +174,7 @@ def maps_sandbox(request):
   lat = str(coordinates['lat'])
   lng = str(coordinates['lng'])
   full_address = ", ".join(elements)
-  # Look up an address with reverse geocoding
-  # reverse_geocode_result = gmaps.reverse_geocode((40.714224, -73.961452))
-
-  # Request directions via public transit
-  # now = datetime.now()
-  # directions_result = gmaps.directions("Sydney Town Hall",
-  #                                     "Parramatta, NSW",
-  #                                     mode="transit",
-  #                                     departure_time=now)
-
+  
   return render(request,'maps/sandbox.html',
                 {
                 # 'geocode_result': ", ".join(elements),
