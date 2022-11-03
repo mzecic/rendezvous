@@ -1,6 +1,33 @@
+
+// let autocomplete = null;
+let autocomplete;
+function initAutocomplete() {
+    autocomplete = new google.maps.places.Autocomplete(
+    document.getElementById('autocomplete')
+    // , 
+    // {
+    //     componentRestrictions: { country: "us" },
+    //     fields: ["address_components", "name"],
+    //     types: ["address"],
+    // }
+    )
+    autocomplete.addListener("place_changed", fillInAddress);
+}
+
+google.maps.event.addDomListener(window, 'load', initAutocomplete);
+
+
+// function fillInAddress() {
+//     console.log('in the fillinaddress function', autocomplete)
+//     const place = autocomplete.getPlace();
+//     console.log('place**', place)
+
+// }
+
 function fillInAddress() {
     // Get the place details from the autocomplete object.
     const place = autocomplete.getPlace();
+    console.log("***place", place)
     let address1 = "";
     let postcode = "";
   
@@ -43,14 +70,11 @@ function fillInAddress() {
           document.querySelector("#country").value = component.long_name;
           break;
       }
+      console.log(address1, postcode)
+      initializeMap();
     }
   
-    address1Field.value = address1;
-    postalField.value = postcode;
-    // After filling the form with address components from the Autocomplete
-    // prediction, set cursor focus on the second address line to encourage
-    // entry of subpremise information such as apartment, unit, or floor number.
-    address2Field.focus();
   }
   
   window.initAutocomplete = initAutocomplete;
+

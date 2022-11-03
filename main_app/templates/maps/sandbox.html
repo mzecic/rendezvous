@@ -1,4 +1,6 @@
+{% extends 'base.html' %}
 {% load static %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,65 +8,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Maps sandbox</title>
-  <script src="https://maps.googleapis.com/maps/api/js?key={{g_api_key}}&libraries=places&callback=initMap"></script>
-  <script>
-    let user_place;
-    console.log('keith is here')
-    function initAutocomplete() {
-      autocomplete = new google.maps.places.Autocomplete(
-        document.getElementById('autocomplete'), 
-        {
-          componentRestrictions: { country: "us" },
-          fields: ["address_components", "name"],
-          types: ["address"],
-        }
-      )
-      console.log(autocomplete, 'autocomplete ** stuff **')
-      address_complete(autocomplete);
-    }
-function address_complete(user_place){
-  console.log(user_place.address_components)
-  //   for (const component of user_place.address_components) {
-  //   // @ts-ignore remove once typings fixed
-  //   const componentType = component.types[0];
+  <script src="https://maps.googleapis.com/maps/api/js?key={{g_api_key}}&libraries=places&callback=initAutocomplete"></script>
+  <script src="{% static '/js/maps.js' %}"></script>
 
-  //   switch (componentType) {
-  //     case "street_number": {
-  //       address = `${component.long_name} ${address1}`;
-  //       break;
-  //     }
-
-  //     case "route": {
-  //       address1 += component.short_name;
-  //       break;
-  //     }
-
-  //     case "postal_code": {
-  //       postcode = `${component.long_name}${postcode}`;
-  //       break;
-  //     }
-
-  //     case "postal_code_suffix": {
-  //       postcode2 = `${postcode}-${component.long_name}`;
-  //       break;
-  //     }
-  //     case "locality":
-  //       document.querySelector("#locality").value = component.long_name;
-  //       break;
-  //     case "administrative_area_level_1": {
-  //       document.querySelector("#state").value = component.short_name;
-  //       break;
-  //     }
-  //     case "country":
-  //       document.querySelector("#country").value = component.long_name;
-  //       break;
-  //   }
-  //   console.log(postcode, postcode2, address1, address, 'autocomplete?')
-  // }
-}
-
-    google.maps.event.addDomListener(window, 'load', initAutocomplete);
-  </script>
 </head>
 <body>
   
@@ -73,6 +19,44 @@ function address_complete(user_place){
 <input id="locality" type="text" placeholder="locality"/>
 <input id="state" type="text" placeholder="state"/>
 <input id="country" type="text" placeholder="country"/>
+
+    <body>
+      <h6>Matej, Abdullahi - When you enter an address above, it will trigger a map to be rendered below. But the below map is not showing the address you just entered. I will get that working Tursday as I move it to the profile detail page. </h6>
+        <!-- <div>Address: {{full_address}}</div> -->
+        <div id="googleMap" style="width:500px;height:380px;"></div>
+
+    </body>
+
 </body>
+<!-- Maps render below -->
+
+<script>
+  // var lat=51.508742;
+  // var lng=8.120850;
+  var lat={{lat}};
+  var lng={{lng}};
+
+  var myCenter=new google.maps.LatLng(lat,lng);
+
+
+  function initializeMap()
+  {
+  var mapProp = {
+    center:myCenter,
+    zoom:5,
+    mapTypeId:google.maps.MapTypeId.ROADMAP
+    };
+
+  var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+  var marker=new google.maps.Marker({
+    position:myCenter,
+    });
+
+  marker.setMap(map);
+  }
+  
+  </script>
 </html>
 
+{% endblock %}
