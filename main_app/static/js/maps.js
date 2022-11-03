@@ -27,7 +27,7 @@ google.maps.event.addDomListener(window, 'load', initAutocomplete);
 function fillInAddress() {
     // Get the place details from the autocomplete object.
     const place = autocomplete.getPlace();
-    console.log("***place", place)
+
     let address1 = "";
     let postcode = "";
   
@@ -47,6 +47,7 @@ function fillInAddress() {
   
         case "route": {
           address1 += component.short_name;
+          document.querySelector("#address1").value = address1;
           break;
         }
   
@@ -57,6 +58,7 @@ function fillInAddress() {
   
         case "postal_code_suffix": {
           postcode = `${postcode}-${component.long_name}`;
+          document.querySelector("#postcode").value = postcode;
           break;
         }
         case "locality":
@@ -70,8 +72,8 @@ function fillInAddress() {
           document.querySelector("#country").value = component.long_name;
           break;
       }
-      console.log(address1, postcode)
-      initializeMap();
+      // console.log(address1, postcode)
+      // initializeMap();
     }
   
   }
