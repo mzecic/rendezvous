@@ -3,26 +3,16 @@
 let autocomplete;
 function initAutocomplete() {
     autocomplete = new google.maps.places.Autocomplete(
-    document.getElementById('autocomplete')
-    // , 
-    // {
-    //     componentRestrictions: { country: "us" },
-    //     fields: ["address_components", "name"],
-    //     types: ["address"],
-    // }
-    )
+    document.getElementById('autocomplete'), 
+    {
+        componentRestrictions: { country: "us" },  // Apologies to my Canadian friend Abdullahi and Croatian friend Matej
+        fields: ["address_components", "name"],
+        types: ["address"],
+    })
     autocomplete.addListener("place_changed", fillInAddress);
 }
 
 google.maps.event.addDomListener(window, 'load', initAutocomplete);
-
-
-// function fillInAddress() {
-//     console.log('in the fillinaddress function', autocomplete)
-//     const place = autocomplete.getPlace();
-//     console.log('place**', place)
-
-// }
 
 function fillInAddress() {
     // Get the place details from the autocomplete object.
@@ -36,7 +26,10 @@ function fillInAddress() {
     // place.address_components are google.maps.GeocoderAddressComponent objects
     // which are documented at http://goo.gle/3l5i5Mr
     for (const component of place.address_components) {
-      // @ts-ignore remove once typings fixed
+      console.log(component.types[0], component.long_name)
+  }
+
+    for (const component of place.address_components) {
       const componentType = component.types[0];
   
       switch (componentType) {
