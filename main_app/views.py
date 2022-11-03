@@ -174,7 +174,7 @@ def maps_sandbox(request):
   lat = str(coordinates['lat'])
   lng = str(coordinates['lng'])
   full_address = ", ".join(elements)
-  
+
   return render(request,'maps/sandbox.html',
                 {
                 # 'geocode_result': ", ".join(elements),

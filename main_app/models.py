@@ -23,7 +23,7 @@ class Profile(models.Model):
     address_line_1 = models.CharField(max_length=100, blank=True)
     city = models.CharField(max_length=100, blank=True)
     state = models.CharField(max_length=2, blank=True)
-    postal_code = models.IntegerField(blank=True)
+    postal_code = models.CharField(max_length=100, blank=True)
     country = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
