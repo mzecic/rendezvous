@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-<h1>Listings</h1>
+<h3 class="center">All Listings</h3>
 
 
  <div class="row row-index">
@@ -16,7 +16,7 @@
           {% endif %}
       </div>
       <div class="card-content">
-        <span class="card-title activator grey-text text-darken-4">{{ listing.title }}<i class="material-icons right">...</i></span>
+        <span class="card-title activator grey-text text-darken-4">{{ listing.title }}<i class="material-icons right">info_outline</i></span>
         <p><a href="{% url 'detail' listing.id %}">Show Listing</a></p>
       </div>
       <div class="card-reveal">

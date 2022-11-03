@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-<h1>Listing Details</h1>
+<h3>Listing Details</h3>
 
 <div class="card">
     <div class="card-image waves-effect waves-block waves-light">
@@ -27,8 +27,8 @@
     {% csrf_token %}
     <input type="file" name="photo-file">
     <br><br>
-    <input type="submit" class="btn" value="Upload Photo">
-    <span><a class="btn" href="{% url 'edit_photos' listing.id %}">EDIT PHOTOS</a></span>
+    <input type="submit" class="btn green" value="Upload Photo">
+    <span><a class="btn blue" href="{% url 'edit_photos' listing.id %}">EDIT PHOTOS</a></span>
 </form>
 {% endif %}
 
@@ -40,8 +40,8 @@
     </div>
      <div class="card-action">
         {% if request.user.id == listing.user.id %}
-          <a href="{% url 'listings_update' listing.id %}">Edit</a>
-          <a href="{% url 'listings_delete' listing.id %}">Delete</a>
+          <a class="btn-floating btn-large blue" href="{% url 'listings_update' listing.id %}"><i class="material-icons">edit</i></a>
+          <a class="btn-floating btn-large red" href="{% url 'listings_delete' listing.id %}"><i class="material-icons">delete</i></a>
         {% endif %}
       </div>
     </div>
@@ -58,7 +58,7 @@
         {% if request.user.is_superuser %}
            <form class="comment-form" method="POST" action="{% url 'delete_comment' listing.id comment.id%}">
             {% csrf_token %}
-            <button id="comment-delete" class="btn red lighten-1"> Delete Comment </button>
+            <button id="comment-delete" class="btn red lighten-1 waves-effect"> Delete Comment </button>
            </form>
            {% endif %}
       </li>
@@ -70,7 +70,7 @@
       <form action="{% url 'add_comment' listing.id %}" method="POST">
         {% csrf_token %}
         {{ comment_form.as_p }}
-        <input type="submit" class="btn" value="Add Comment">
+        <input type="submit" class="btn green" value="Add Comment">
       </form>
     </div>
 </div>

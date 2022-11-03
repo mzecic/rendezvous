@@ -10,24 +10,25 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <link rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}">
   <script async defer src="https://maps.googleapis.com/maps/api/js?key={{g_api_key}}&callback=initMap"></script>
-
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <!-- Which of these below do we still need? -->
-  <script src="{% static 'js/materialize.js' %}"> </script>
+  {% comment %} I commented them out for now. Before the final refactoring, if nothing breaks, I suggest removing them all is safe {% endcomment %}
+  {% comment %} <script src="{% static 'js/materialize.js' %}"> </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-  <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+  <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script> {% endcomment %}
 </head>
 <body>
   <header class="navbar-fixed">
     <ul id="dropdown1" class="dropdown-content">
       <li><a href="{% url 'logout' %}">Log Out</a></li>
       <li><a href="{% url 'profile_edit' user.id %}">Edit</a></li>
-      <li><a href="{% url 'my_listings' %}">View My Listings</a></li>
+      <li><a href="{% url 'my_listings' %}">My Listings</a></li>
     </ul>
     <nav>
-      <div class="nav-wrapper green lighten-1">
+      <div class="nav-wrapper green">
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">
           <div class="menu-icon"></div>
           <div class="menu-icon"></div>
@@ -37,10 +38,10 @@
           <li><a href="/" class="brand-logo">&nbsp;&nbsp;Rendezvous</a></li>
         </ul>
         <ul class="left hide-on-med-and-down">
-          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'about' %}"><i class="material-icons right">info_outline</i>About</a></li>
           {% if user.is_authenticated %}
-            <li><a href="{% url 'listings_create' %}">Add Listing</a></li>
-            <li><a href="{% url 'index' %}">View All Listings</a></li>
+            <li><a href="{% url 'listings_create' %}"><i class="material-icons right">add_box</i>Add Listing</a></li>
+            <li><a href="{% url 'index' %}"><i class="material-icons right">view_module</i>All Listings</a></li>
           {% else %}
             <li><a href="{% url 'login' %}">Log In</a></li>
             <li><a href="{% url 'signup' %}">Sign Up</a></li>
@@ -54,14 +55,14 @@
       </div>
     </nav>
   </header>
-  <ul class="sidenav green lighten-4" id="mobile-demo">
-    <li><a href="{% url 'about' %}">About</a></li>
+  <ul class="sidenav" id="mobile-demo">
+    <li><a href="{% url 'about' %}"><i class="material-icons right">info_outline</i>About</a></li>
   {% if user.is_authenticated %}
-    <li><a href="{% url 'listings_create' %}">Add Listing</a></li>
-    <li><a href="{% url 'index' %}">View All Listings</a></li>
+    <li><a href="{% url 'listings_create' %}"><i class="material-icons right">add_box</i>Add Listing</a></li>
+    <li><a href="{% url 'index' %}"><i class="material-icons right">view_module</i>All Listings</a></li>
     <li class="divider black"></li>
     <li><a href="#!">Edit</a></li>
-    <li><a href="{% url 'my_listings' %}">View My Listings</a></li>
+    <li><a href="{% url 'my_listings' %}">My Listings</a></li>
     <li><a href="{% url 'logout' %}">Log Out</a></li>
   {% else %}
     <li><a href="{% url 'login' %}">Log In</a></li>
@@ -72,7 +73,8 @@
     {% block content %}
     {% endblock %}
   </main>
-  <footer class="page-footer green lighten-1">
+  </br>
+  <footer class="page-footer green">
     <div class="right">All Rights Reserved, &copy; 2022 Rendezvous &nbsp;</div>
   </footer>
   <script>

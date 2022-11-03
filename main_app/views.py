@@ -148,7 +148,7 @@ def delete_comment(request, comment_id, listing_id):
 
 def profile_edit(request, user_id):
   user = User.objects.get(id=user_id)
-  profile = Profile.objects.get(user=user_id)
+  profile = Profile.objects.filter(user=user_id)
   return render(request, 'profile/detail.html', {
     'user': user,
     'user': request.user,
