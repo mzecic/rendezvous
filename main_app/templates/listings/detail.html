@@ -54,7 +54,7 @@
         <span class="title">{{comment.commenter}}</span>
         <p class="comment">{{comment.content}}
         </p>
-        <span href="#!" class="secondary-content"><i class="material-icons">{{comment.date}}</i></span>
+        <span href="#!" class="secondary-content"><span class="">{{comment.date}}</span></span>
         {% if request.user.is_superuser %}
            <form class="comment-form" method="POST" action="{% url 'delete_comment' listing.id comment.id%}">
             {% csrf_token %}
