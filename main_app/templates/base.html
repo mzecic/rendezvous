@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">  
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,14 +14,14 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <!-- Which of these below do we still need? -->
-  <!-- 
+  <!--
   {% comment %} I commented them out for now. Before the final refactoring, if nothing breaks, I suggest removing them all is safe {% endcomment %}
   {% comment %} <script src="{% static 'js/materialize.js' %}"> </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
   <!-- <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script> -->
-  {% endcomment %}  
+  {% endcomment %}
 -->
 </head>
   <header class="navbar-fixed">
@@ -84,6 +84,9 @@
 
 
     document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.parallax');
+      var instances = M.Parallax.init(elems, options);
+      
       var elems = document.querySelectorAll('.slider');
       var sliderOptions = {
         'height': 650,

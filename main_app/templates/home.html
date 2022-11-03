@@ -1,6 +1,161 @@
-{% extends 'base.html' %}
-{% block content %}
+{% load static %}
+<!DOCTYPE html>
 
-<h1>Home</h1>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Rendezvous</title>
+  <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}">
+  <!-- <script defer src="https://maps.googleapis.com/maps/api/js?key={{g_api_key}}&callback=initializeMap"></script> -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-{% endblock %}
+  <!-- Which of these below do we still need? -->
+  <!--
+  {% comment %} I commented them out for now. Before the final refactoring, if nothing breaks, I suggest removing them all is safe {% endcomment %}
+  {% comment %} <script src="{% static 'js/materialize.js' %}"> </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  <!-- <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script> -->
+  {% endcomment %}
+-->
+</head>
+  <header class="navbar-fixed">
+    <ul id="dropdown1" class="dropdown-content">
+      <li><a href="{% url 'logout' %}">Log Out</a></li>
+      <li><a href="{% url 'profile_edit' user.id %}">Edit</a></li>
+      <li><a href="{% url 'my_listings' %}">My Listings</a></li>
+    </ul>
+    <nav>
+      <div class="nav-wrapper green">
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">
+          <div class="menu-icon"></div>
+          <div class="menu-icon"></div>
+          <div class="menu-icon"></div>
+          </i></a>
+        <ul>
+          <li><a href="/" class="brand-logo">&nbsp;&nbsp;Rendezvous</a></li>
+        </ul>
+        <ul class="left hide-on-med-and-down">
+          <li><a href="{% url 'about' %}"><i class="material-icons right">info_outline</i>About</a></li>
+          {% if user.is_authenticated %}
+            <li><a href="{% url 'listings_create' %}"><i class="material-icons right">add_box</i>Add Listing</a></li>
+            <li><a href="{% url 'index' %}"><i class="material-icons right">view_module</i>All Listings</a></li>
+          {% else %}
+            <li><a href="{% url 'login' %}">Log In</a></li>
+            <li><a href="{% url 'signup' %}">Sign Up</a></li>
+          {% endif %}
+        </ul>
+        <ul class="right hide-on-med-and-down">
+          {% if user.is_authenticated %}
+            <li><a class="dropdown-trigger" href="#!" data-target="dropdown1"><img id="avatar-nav" class="avatar" src="{% static '/img/account_avatar.png' %}"><i class="material-icons right"></i></a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+    <ul class="sidenav" id="mobile-demo">
+      <li><a href="{% url 'about' %}"><i class="material-icons right">info_outline</i>About</a></li>
+      {% if user.is_authenticated %}
+      <li><a href="{% url 'listings_create' %}"><i class="material-icons right">add_box</i>Add Listing</a></li>
+      <li><a href="{% url 'index' %}"><i class="material-icons right">view_module</i>All Listings</a></li>
+      <li class="divider black"></li>
+      <li><a href="#!">Edit</a></li>
+      <li><a href="{% url 'my_listings' %}">My Listings</a></li>
+      <li><a href="{% url 'logout' %}">Log Out</a></li>
+      {% else %}
+      <li><a href="{% url 'login' %}">Log In</a></li>
+      <li><a href="{% url 'signup' %}">Sign Up</a></li>
+      {% endif %}
+    </ul>
+  </header>
+
+<div class="parallax-container">
+    <div class="parallax"><img src="https://img.freepik.com/premium-vector/flea-market-with-people-buying-second-hand-goods-street-fair-with-sellers-selling-vintage-furniture-clothing_102902-6432.jpg?w=1380"></div>
+ </div>
+ <div class="section white">
+    <div class="row container">
+      <h2 class="header">Rendezvous</h2>
+      <p class="grey-text text-darken-3 lighten-3">A full stack app that helps you find a neutral place to complete purchases from Offer Up, Craigslist, FB Marketplace, Nextdoor, etc.</p>
+    </div>
+  </div>
+  <div class="parallax-container">
+    <div class="parallax"><img src="https://t4.ftcdn.net/jpg/00/55/28/49/240_F_55284903_sab1NY9GNz7cS0ksQuDAXTXn5H5mAD4t.jpg"></div>
+ </div>
+ <div class="section white">
+    <h4 class="center">Technologies Used:</h4>
+    <div class="row container">
+      <h2 class="header"></h2>
+      <div class="carousel">
+        <a class="carousel-item" href="#one!"><img src="https://www.djangoproject.com/m/img/logos/django-logo-negative.png"></a>
+        <a class="carousel-item" href="#two!"><img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Sql_data_base_with_logo.png"></a>
+        <a class="carousel-item" href="#three!"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/800px-Python-logo-notext.svg.png"></a>
+        <a class="carousel-item" href="#four!"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/CSS3_logo_and_wordmark.svg/1200px-CSS3_logo_and_wordmark.svg.png"></a>
+        <a class="carousel-item" href="#five!"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/1200px-HTML5_logo_and_wordmark.svg.png"></a>
+        <a class="carousel-item" href="#five!"><img src="https://1000logos.net/wp-content/uploads/2020/09/JavaScript-Logo.png"></a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.carousel');
+      var instances = M.Carousel.init(elems,
+      {
+        indicators: true,
+      });
+      let indicatorItems = document.querySelectorAll('.carousel .indicator-item'),
+      slideTime = 2000,
+      activeClass = "active";
+
+  setInterval(() => {
+    indicatorItems.forEach(el => {
+      if (el.classList.contains(activeClass)) {
+        sib = el.nextElementSibling;
+        if (sib == null) {
+          indicatorItems[0].click();
+        } else {
+          sib.click()
+        }
+      }
+    });
+  }, slideTime);
+
+
+
+      var elems = document.querySelectorAll('.parallax');
+      var instances = M.Parallax.init(elems, options);
+
+      var elems = document.querySelectorAll('.slider');
+      var sliderOptions = {
+        'height': 650,
+      }
+      var instances = M.Slider.init(elems, sliderOptions);
+
+      var elems = document.querySelectorAll('.sidenav');
+      var options = {
+        'closeOnClick': true,
+      }
+      var instances = M.Sidenav.init(elems, options);
+
+      var elems = document.querySelectorAll('.materialboxed');
+      var boxedOptions = {
+        'originalHeight': 650,
+      }
+      var instances = M.Materialbox.init(elems, boxedOptions);
+
+      var dropdown1 = document.querySelector('.dropdown-trigger');
+      var dropdownOptions = {
+        'closeOnClick': true,
+        'hover':true
+    }
+      var instanceDropdown1 = M.Dropdown.init(dropdown1, dropdownOptions);
+  });
+  </script>
+</html>
