@@ -1,16 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Maps sandbox</title>
   <script src="https://maps.googleapis.com/maps/api/js?key={{g_api_key}}&libraries=places&callback=initAutocomplete"></script>
   <script src="{% static '/js/maps.js' %}"></script>
-
 </head>
 <body>
   
@@ -20,12 +14,12 @@
 <input id="state" type="text" placeholder="state"/>
 <input id="country" type="text" placeholder="country"/>
 
-    <body>
+    
       <h6>Matej, Abdullahi - When you enter an address above, it will trigger a map to be rendered below. But the below map is not showing the address you just entered. I will get that working Tursday as I move it to the profile detail page. </h6>
         <!-- <div>Address: {{full_address}}</div> -->
         <div id="googleMap" style="width:500px;height:380px;"></div>
 
-    </body>
+    
 
 </body>
 <!-- Maps render below -->
