@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en">  
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,14 +14,16 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <!-- Which of these below do we still need? -->
+  <!-- 
   {% comment %} I commented them out for now. Before the final refactoring, if nothing breaks, I suggest removing them all is safe {% endcomment %}
   {% comment %} <script src="{% static 'js/materialize.js' %}"> </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-  <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script> {% endcomment %}
+  <!-- <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script> -->
+  {% endcomment %}  
+-->
 </head>
-<body>
   <header class="navbar-fixed">
     <ul id="dropdown1" class="dropdown-content">
       <li><a href="{% url 'logout' %}">Log Out</a></li>
@@ -55,21 +57,21 @@
         </ul>
       </div>
     </nav>
+    <ul class="sidenav" id="mobile-demo">
+      <li><a href="{% url 'about' %}"><i class="material-icons right">info_outline</i>About</a></li>
+      {% if user.is_authenticated %}
+      <li><a href="{% url 'listings_create' %}"><i class="material-icons right">add_box</i>Add Listing</a></li>
+      <li><a href="{% url 'index' %}"><i class="material-icons right">view_module</i>All Listings</a></li>
+      <li class="divider black"></li>
+      <li><a href="#!">Edit</a></li>
+      <li><a href="{% url 'my_listings' %}">My Listings</a></li>
+      <li><a href="{% url 'logout' %}">Log Out</a></li>
+      {% else %}
+      <li><a href="{% url 'login' %}">Log In</a></li>
+      <li><a href="{% url 'signup' %}">Sign Up</a></li>
+      {% endif %}
+    </ul>
   </header>
-  <ul class="sidenav" id="mobile-demo">
-    <li><a href="{% url 'about' %}"><i class="material-icons right">info_outline</i>About</a></li>
-  {% if user.is_authenticated %}
-    <li><a href="{% url 'listings_create' %}"><i class="material-icons right">add_box</i>Add Listing</a></li>
-    <li><a href="{% url 'index' %}"><i class="material-icons right">view_module</i>All Listings</a></li>
-    <li class="divider black"></li>
-    <li><a href="#!">Edit</a></li>
-    <li><a href="{% url 'my_listings' %}">My Listings</a></li>
-    <li><a href="{% url 'logout' %}">Log Out</a></li>
-  {% else %}
-    <li><a href="{% url 'login' %}">Log In</a></li>
-    <li><a href="{% url 'signup' %}">Sign Up</a></li>
-  {% endif %}
-  </ul>
   <main class="container">
     {% block content %}
     {% endblock %}
