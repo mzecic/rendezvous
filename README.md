@@ -40,8 +40,7 @@ A MAK-daddies team project by M:atej Zecic, A:bdullahi Ali, K:eith Williams.
  - Javascript
  - CSS
  - HTML
- - SQL database
- - Heroku
+ - SQL 
 
 ## Icebox features
  - suggest meetup spot based on user location
