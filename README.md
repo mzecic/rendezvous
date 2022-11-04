@@ -17,7 +17,7 @@ A MAK-daddies team project by M:atej Zecic, A:bdullahi Ali, K:eith Williams.
   <a href="#key-features">Key Features</a> •
   <a href="#how-to-use">How To Use</a> •
   <a href="#technologies-used">Technologies used</a> •
-  <a href="#icebox-features">Icebox features</a> •
+  <a href="#icebox-features">Icebox features</a> 
 </p>
 
 ![screenshot](/main_app/static/img/Detail%20page%20screenshot.png)
