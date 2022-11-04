@@ -4,32 +4,39 @@
 <script src="https://maps.googleapis.com/maps/api/js?key={{g_api_key}}&libraries=places&callback=initAutocomplete"></script>
 <script src="{% static '/js/maps.js' %}"></script>
 <br>
-<form id="address-form" action="" method="POST" autocomplete="off">
-    
+<h2>Edit Profile Address</h2>
+<br>
+<form id="address-form" action="/profile/{{profile.id}}/" method="POST" autocomplete="off">
     <!-- <label class="full-field"> -->
       <span>Address</span>
-      <input id="autocomplete" required autocomplete="off" />
+      <input id="autocomplete" required value="{{profile.location}}" autocomplete="off" />
     <!-- </label> -->
     <label class="full-field">
       <span class="form-label">Street</span>
-      <input id="address1" name="address1" disabled/>
+      <input id="address1" name="address1" value="{{profile.address_line_1}}" disabled/>
     </label>
     <label class="full-field">
       <span class="form-label">City</span>
-      <input id="locality" name="locality" disabled />
+      <input id="locality" name="locality" value="{{profile.city}}" disabled />
     </label>
     <label class="slim-field-left">
       <span class="form-label">State/Province</span>
-      <input id="state" name="state" disabled />
+      <input id="state" name="state" value="{{profile.state}}" disabled />
     </label>
     <label class="slim-field-right" for="postal_code">
       <span class="form-label">Postal code</span>
-      <input id="postcode" name="postcode" disabled />
+      <input id="postcode" name="postcode" value="{{profile.postal_code}}" disabled />
     </label>
     <label class="full-field">
       <span class="form-label">Country/Region</span>
-      <input id="country" name="country" disabled />
+      <input id="country" name="country" value="{{profile.country}}" disabled />
     </label>
     <button type="button" class="my-button">Save address</button>
   </form>
 {% endblock %}
+
+<!-- <form action="{% url 'add_comment' listing.id %}" method="POST">
+  {% csrf_token %}
+  {{ comment_form.as_p }}
+  <input type="submit" class="btn green" value="Add Comment">
+</form> -->
