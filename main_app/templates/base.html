@@ -13,18 +13,9 @@
   <!-- <script defer src="https://maps.googleapis.com/maps/api/js?key={{g_api_key}}&callback=initializeMap"></script> -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-  <!-- Which of these below do we still need? -->
-  <!--
-  {% comment %} I commented them out for now. Before the final refactoring, if nothing breaks, I suggest removing them all is safe {% endcomment %}
-  {% comment %} <script src="{% static 'js/materialize.js' %}"> </script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-  <!-- <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script> -->
-  {% endcomment %}
--->
+
 </head>
-  <header class="navbar-fixed">
+  <header class="navbar">
     <ul id="dropdown1" class="dropdown-content">
       <li><a href="{% url 'logout' %}">Log Out</a></li>
       <li><a href="{% url 'profile_edit' user.id %}">Edit</a></li>
@@ -33,9 +24,7 @@
     <nav>
       <div class="nav-wrapper green">
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">
-          <div class="menu-icon"></div>
-          <div class="menu-icon"></div>
-          <div class="menu-icon"></div>
+          menu
           </i></a>
         <ul>
           <li><a href="/" class="brand-logo">&nbsp;&nbsp;Rendezvous</a></li>
@@ -58,6 +47,7 @@
       </div>
     </nav>
     <ul class="sidenav" id="mobile-demo">
+      <li><a href="{% url 'home' %}"><i class="material-icons right">home</i>Home</a></li>
       <li><a href="{% url 'about' %}"><i class="material-icons right">info_outline</i>About</a></li>
       {% if user.is_authenticated %}
       <li><a href="{% url 'listings_create' %}"><i class="material-icons right">add_box</i>Add Listing</a></li>
@@ -84,9 +74,31 @@
 
 
     document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.carousel');
+      var instances = M.Carousel.init(elems,
+      {
+        indicators: true,
+      });
+      let indicatorItems = document.querySelectorAll('.carousel .indicator-item'),
+      slideTime = 2000,
+      activeClass = "active";
+
+  setInterval(() => {
+    indicatorItems.forEach(el => {
+      if (el.classList.contains(activeClass)) {
+        sib = el.nextElementSibling;
+        if (sib == null) {
+          indicatorItems[0].click();
+        } else {
+          sib.click()
+        }
+      }
+    });
+  }, slideTime);
+
       var elems = document.querySelectorAll('.parallax');
       var instances = M.Parallax.init(elems, options);
-      
+
       var elems = document.querySelectorAll('.slider');
       var sliderOptions = {
         'height': 650,
