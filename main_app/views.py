@@ -6,31 +6,15 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
 from .forms import CommentForm
 from datetime import date
 import uuid
 import boto3
 import os
-#gmaps stuff
+#gmaps stuff below
 import googlemaps
 from datetime import datetime
-
-# import requests
-# import json
-# import pandas as pd
-# import urllib.request
-# import simplejson as json
-# import pprint
-# import environ
-
-# Test listings data
-
-
-# listings = [
-#   Listing('title1', 'description1'),
-#   Listing('title2', 'description2'),
-#   Listing('title3', 'description3'),
-#   ]
 
 # Define the home view
 def home(request):
@@ -87,27 +71,6 @@ class ListingDelete(LoginRequiredMixin, DeleteView):
   model = Listing
   success_url = '/listings/'
 
-def signup(request):
-  error_message = ''
-  if request.method == 'POST':
-    # This is how to create a 'user' form object
-    # that includes the data from the browser
-    form = UserCreationForm(request.POST)
-    if form.is_valid():
-      # This will add the user to the database
-      user = form.save()
-      profile = Profile.objects.create(user_id=user.id)
-      profile.save()
-      # This is how we log a user in via code
-      login(request, user)
-      return redirect('index')
-    else:
-      error_message = 'Invalid sign up - try again'
-  # A bad POST or a GET request, so render signup.html with an empty form
-  form = UserCreationForm()
-  context = {'form': form, 'error_message': error_message}
-  return render(request, 'registration/signup.html', context)
-
 def add_photo(request, listing_id):
     # photo-file will be the "name" attribute on the <input type="file">
     photo_file = request.FILES.get('photo-file', None)
@@ -145,32 +108,50 @@ def delete_comment(request, comment_id, listing_id):
 
   return redirect(reverse('detail', args=(listing_id,)))
 
+def signup(request):
+  error_message = ''
+  if request.method == 'POST':
+    # This is how to create a 'user' form object
+    # that includes the data from the browser
+    form = UserCreationForm(request.POST)
+    if form.is_valid():
+      # This will add the user to the database
+      user = form.save()
+      profile = Profile.objects.create(user_id=user.id)
+      profile.save()
+      # This is how we log a user in via code
+      login(request, user)
+      return redirect('index')
+    else:
+      error_message = 'Invalid sign up - try again'
+  # A bad POST or a GET request, so render signup.html with an empty form
+  form = UserCreationForm()
+  context = {'form': form, 'error_message': error_message}
+  return render(request, 'registration/signup.html', context)
 
 def profile_edit(request, user_id):
   user = User.objects.get(id=user_id)
   profile = Profile.objects.get(user=user_id)
   return render(request, 'profile/detail.html', {
     'user': user,
-    # 'user': request.user,
     'profile': profile,
     'g_api_key':os.environ['GOOGLE_API_KEY']
   })
 
-  # def save_profile(request, profile_id):
-   # create a ModelForm instance using the data in request.POST
-    # validate the form
-    # if form.is_valid():
-      # don't save the form to the db until it
-      # has the cat_id assigned
-
-
-    #   new_profile = form.save(commit=False)
-    #   new_profile.listing_id = listing_id
-    #   new_profile.date = date.today()
-    #   new_profile.commenter_id = request.user.id
-    #   new_profile.save()
-    # return redirect('detail', listing_id=listing_id)
-
+def profile_save(request, profile_id):
+  profile = Profile.objects.get(id=profile_id)
+  profile.location = request.POST.get("location")
+  profile.address_line_1 = request.POST.get("address1")
+  profile.city = request.POST.get("locality")
+  profile.state = request.POST.get("state")
+  profile.postal_code = request.POST.get("postcode")
+  profile.country = request.POST.get("country")
+  print(':***', request.POST.get("address1"))
+  print(request.POST, 'request post')
+  print('requst:', request)
+  profile.save()
+  return redirect(f'/profile/{request.user.id}')
+  
 # gmaps
 def maps_sandbox(request):
   g_api_key = os.environ['GOOGLE_API_KEY']

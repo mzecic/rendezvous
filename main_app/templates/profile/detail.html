@@ -6,32 +6,33 @@
 <br>
 <h2>Edit Profile Address</h2>
 <br>
-<form id="address-form" action="/profile/{{profile.id}}/" method="POST" autocomplete="off">
+<form id="address-form" action="/profile/{{profile.id}}/save" method="POST" autocomplete="off">
+  {% csrf_token %}
     <!-- <label class="full-field"> -->
       <span>Address</span>
-      <input id="autocomplete" required value="{{profile.location}}" autocomplete="off" />
+      <input id="autocomplete" name="location" required value="{{profile.location}}" autocomplete="off" />
     <!-- </label> -->
     <label class="full-field">
       <span class="form-label">Street</span>
-      <input id="address1" name="address1" value="{{profile.address_line_1}}" disabled/>
+      <input id="address1" name="address1" value="{{profile.address_line_1}}" />
     </label>
     <label class="full-field">
       <span class="form-label">City</span>
-      <input id="locality" name="locality" value="{{profile.city}}" disabled />
+      <input id="locality" name="locality" value="{{profile.city}}"  />
     </label>
     <label class="slim-field-left">
       <span class="form-label">State/Province</span>
-      <input id="state" name="state" value="{{profile.state}}" disabled />
+      <input id="state" name="state" value="{{profile.state}}"  />
     </label>
     <label class="slim-field-right" for="postal_code">
       <span class="form-label">Postal code</span>
-      <input id="postcode" name="postcode" value="{{profile.postal_code}}" disabled />
+      <input id="postcode" name="postcode" value="{{profile.postal_code}}"  />
     </label>
     <label class="full-field">
       <span class="form-label">Country/Region</span>
-      <input id="country" name="country" value="{{profile.country}}" disabled />
+      <input id="country" name="country" value="{{profile.country}}"  />
     </label>
-    <button type="button" class="my-button">Save address</button>
+    <input type="submit" class="btn green" value="Save address">
   </form>
 {% endblock %}
 

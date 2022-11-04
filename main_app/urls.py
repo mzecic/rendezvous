@@ -17,6 +17,7 @@ urlpatterns = [
     path('listings/<int:listing_id>/delete_comment/<int:comment_id>', views.delete_comment, name='delete_comment'),
     path('maps/', views.maps_sandbox, name='maps_sandbox'),
     path('profile/<user_id>/', views.profile_edit, name="profile_edit"),
+    path('profile/<int:profile_id>/save', views.profile_save, name="profile_save"),
     path('listing/<int:listing_id>/edit_photos/', views.edit_photos, name="edit_photos"),
     path('listings/<int:listing_id>/delete_photo/<int:photo_id>', views.delete_photo, name='delete_photo'),
 ]
