@@ -156,14 +156,14 @@ def profile_edit(request, user_id):
     'g_api_key':os.environ['GOOGLE_API_KEY']
   })
 
-  def save_profile(request, profile_id):
+  # def save_profile(request, profile_id):
    # create a ModelForm instance using the data in request.POST
     # validate the form
     # if form.is_valid():
       # don't save the form to the db until it
       # has the cat_id assigned
 
-      
+
     #   new_profile = form.save(commit=False)
     #   new_profile.listing_id = listing_id
     #   new_profile.date = date.today()
