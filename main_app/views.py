@@ -33,7 +33,6 @@ def my_listings(request):
 
 def listings_detail(request, listing_id):
   listing = Listing.objects.get(id=listing_id)
-  # print('signed in user id', request.user.id, 'owner', listing.user.id)
   comment_form = CommentForm()
   return render(request, 'listings/detail.html', { 'listing': listing, 'comment_form':comment_form})
 
@@ -43,7 +42,6 @@ def add_comment(request, listing_id):
   # validate the form
   if form.is_valid():
     # don't save the form to the db until it
-    # has the cat_id assigned
     new_comment = form.save(commit=False)
     new_comment.listing_id = listing_id
     new_comment.date = date.today()
@@ -84,7 +82,6 @@ def add_photo(request, listing_id):
             s3.upload_fileobj(photo_file, bucket, key)
             # build the full url string
             url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
-            # we can assign to cat_id or cat (if you have a cat object)
             Photo.objects.create(url=url, listing_id=listing_id)
         except Exception as e:
             print('An error occurred uploading file to S3')
@@ -146,9 +143,6 @@ def profile_save(request, profile_id):
   profile.state = request.POST.get("state")
   profile.postal_code = request.POST.get("postcode")
   profile.country = request.POST.get("country")
-  print(':***', request.POST.get("address1"))
-  print(request.POST, 'request post')
-  print('requst:', request)
   profile.save()
   return redirect(f'/profile/{request.user.id}')
   
@@ -157,25 +151,22 @@ def maps_sandbox(request):
   g_api_key = os.environ['GOOGLE_API_KEY']
   gmaps = googlemaps.Client(key=g_api_key)
   # Geocoding an address
-  # geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
   geocode_result = gmaps.geocode('1858 Ashland Ave, St. Paul, MN')
   coordinates = geocode_result[0]["geometry"]["location"]
+  lat = str(coordinates['lat'])
+  lng = str(coordinates['lng'])
+  
   elements = []
   for i in geocode_result[0]["address_components"]:
     elements.append( i["long_name"] )
 
-  elements.append( str(coordinates['lat']) ) # convert to string to use `join`
-  elements.append( str(coordinates['lng']) ) # convert to string to use `join`
+  elements.append(lat) 
+  elements.append(lng) 
 
-  lat = str(coordinates['lat'])
-  lng = str(coordinates['lng'])
   full_address = ", ".join(elements)
 
   return render(request,'maps/sandbox.html',
                 {
-                # 'geocode_result': ", ".join(elements),
-                # 'reverse_geocode_result':reverse_geocode_result,
-                # 'directions_result':directions_result,
                 'lat':lat,
                 'lng':lng,
                 'full_address':full_address,
