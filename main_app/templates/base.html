@@ -52,7 +52,7 @@
       <li><a href="{% url 'listings_create' %}"><i class="material-icons right">add_box</i>Add Listing</a></li>
       <li><a href="{% url 'index' %}"><i class="material-icons right">view_module</i>All Listings</a></li>
       <li class="divider black"></li>
-      <li><a href="#!">Edit</a></li>
+      <li><a href="{% url 'profile_edit' user.id %}">Edit</a></li>
       <li><a href="{% url 'my_listings' %}">My Listings</a></li>
       <li><a href="{% url 'logout' %}">Log Out</a></li>
       {% else %}
