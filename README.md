@@ -28,7 +28,7 @@ A MAK-daddies team project by M:atej Zecic, A:bdullahi Ali, K:eith Williams.
 * Full crud implementation
   - create, delete, and edit your listings
 * Comment on other listings and communicate your meetup spot
-* Resizable app, works on mobile and desktop
+* Responsive design, works on mobile and desktop
 
 ## How to use
 
