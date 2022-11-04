@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
+<a class="btn blue back-btn"href="/listings/{{ listing.id }}/">Back</a>
 
+<br>
 {% if photos.count %}
 <div class="row">
     {% for photo in photos %}
