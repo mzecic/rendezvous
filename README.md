@@ -9,7 +9,7 @@ A MAK-daddies team project by M:atej Zecic, A:bdullahi Ali, K:eith Williams.
   <br>
 </h1>
 
-<h4 align="center">A full stack app that helps you find a neutral place to complete purchases from Offer Up, Craigslist, FB Marketplace, Nextdoor, etc. <a href="http://electron.atom.io" target="_blank"Rendezvous</a>.</h4>
+<h4 align="center">A full stack app that helps you find a neutral place to complete purchases from Offer Up, Craigslist, FB Marketplace, Nextdoor, etc. <a href="http://electron.atom.io" target="_blank"Rendezvous</a></h4>
 
 
 
