@@ -6,7 +6,6 @@ A MAK-daddies team project by M:atej Zecic, A:bdullahi Ali, K:eith Williams.
   <br>
   <a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://i.ibb.co/MpbGz2v/logo-color.png" alt="rendezvous-logo" width="200"></a>
   <br>
-
   <br>
 </h1>
 
