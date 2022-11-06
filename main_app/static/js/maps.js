@@ -6,7 +6,7 @@ function initAutocomplete() {
     document.getElementById('autocomplete'), 
     {
         componentRestrictions: { country: "us" },  // Apologies to my Canadian friend Abdullahi and Croatian friend Matej
-        fields: ["address_components", "name"],
+        fields: ["address_components", "name", "place_id"],
         types: ["address"],
     })
     autocomplete.addListener("place_changed", fillInAddress);
@@ -16,7 +16,10 @@ google.maps.event.addDomListener(window, 'load', initAutocomplete);
 
 function fillInAddress() {
     // Get the place details from the autocomplete object.
+    
     const place = autocomplete.getPlace();
+    console.log('place', place)
+    console.log('place ID****',place.place_id)
 
     let address1 = "";
     let postcode = "";
