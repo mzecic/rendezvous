@@ -146,6 +146,7 @@ def profile_save(request, profile_id):
   profile.save()
   return redirect(f'/profile/{request.user.id}')
   
+  
 # gmaps
 def maps_sandbox(request):
   g_api_key = os.environ['GOOGLE_API_KEY']
