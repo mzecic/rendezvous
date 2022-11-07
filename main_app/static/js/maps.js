@@ -1,23 +1,24 @@
 
-// let autocomplete = null;
 let autocomplete;
 function initAutocomplete() {
     autocomplete = new google.maps.places.Autocomplete(
     document.getElementById('autocomplete'), 
     {
         componentRestrictions: { country: "us" },  // Apologies to my Canadian friend Abdullahi and Croatian friend Matej
-        fields: ["address_components", "name", "place_id"],
+        fields: ["address_components", "name", "place_id", "geometry"],
         types: ["address"],
     })
     autocomplete.addListener("place_changed", fillInAddress);
 }
 
 google.maps.event.addDomListener(window, 'load', initAutocomplete);
+//defining place outside fillinaddress
+let place 
 
 function fillInAddress() {
     // Get the place details from the autocomplete object.
     
-    const place = autocomplete.getPlace();
+    place = autocomplete.getPlace();
     console.log('place', place)
     console.log('place ID****',place.place_id)
 
@@ -37,7 +38,7 @@ function fillInAddress() {
           address1 = `${component.long_name} ${address1}`;
           break;
         }
-  
+      
         case "route": {
           address1 += component.short_name;
           document.querySelector("#address1").value = address1;
@@ -65,11 +66,49 @@ function fillInAddress() {
           document.querySelector("#country").value = component.long_name;
           break;
       }
-      // bring map back when implementation is ready
-      // initializeMap();
     }
+    initializeMap();
   
   }
+//   // create map
   
-  window.initAutocomplete = initAutocomplete;
+  // var myCenter=new google.maps.LatLng(lat,lng);
+
+  function initializeMap()
+  {
+  var mapProp = {
+    // center:myCenter,
+    zoom:2,
+    mapTypeId:google.maps.MapTypeId.ROADMAP
+    };
+
+  var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+  if (!place.geometry || !place.geometry.location) {
+    return;
+  }
+
+  if (place.geometry.viewport) {
+    map.fitBounds(place.geometry.viewport);
+  } else {
+    map.setCenter(place.geometry.location);
+    map.setZoom(10);
+  }
+
+var marker=new google.maps.Marker({
+  // position:myCenter,
+
+  });
+
+  marker.setPlace({
+    placeId: place.place_id,
+    location: place.geometry.location,
+  });
+
+  // google.maps.LatLng
+  marker.setMap(map);
+  }
+
+  //what does this do??
+window.initAutocomplete = initAutocomplete;
 

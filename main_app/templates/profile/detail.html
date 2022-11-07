@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<script src="https://maps.googleapis.com/maps/api/js?key={{g_api_key}}&libraries=places&callback=initAutocomplete"></script>
+
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key={{g_api_key}}&libraries=places&callback=initAutocomplete"></script> -->
+<script src="https://maps.googleapis.com/maps/api/js?key={{g_api_key}}&libraries=places"></script>
 <script src="{% static '/js/maps.js' %}"></script>
 <br>
 <h2>Edit Profile Address</h2>
 <br>
-<form id="address-form" action="/profile/{{profile.id}}/save" method="POST" autocomplete="off">
+  <form id="address-form" action="/profile/{{profile.id}}/save" method="POST" autocomplete="off">
+
   {% csrf_token %}
     <!-- <label class="full-field"> -->
       <span>Address</span>
@@ -34,7 +37,8 @@
     </label>
     <input type="submit" class="btn green" value="Save address">
   </form>
-  <!-- <iframe src=”https://www.google.com/maps/place/?q=place_id:ChIJ01CL-K4VkFQRwxYqwA-rpk8" width=”600″ height=”450″ frameborder=”0″ style=”border:0″ allowfullscreen></iframe> -->
+  <br><br>
+  <div id="googleMap" style="width:500px;height:380px;"></div>
   
 {% endblock %}
 
