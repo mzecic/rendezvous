@@ -16,7 +16,7 @@ import os
 import googlemaps
 from datetime import datetime
 
-# Define the home view
+
 def home(request):
   return render(request, 'home.html')
 
@@ -37,9 +37,7 @@ def listings_detail(request, listing_id):
   return render(request, 'listings/detail.html', { 'listing': listing, 'comment_form':comment_form})
 
 def add_comment(request, listing_id):
-   # create a ModelForm instance using the data in request.POST
   form = CommentForm(request.POST)
-  # validate the form
   if form.is_valid():
     # don't save the form to the db until it
     new_comment = form.save(commit=False)
@@ -55,9 +53,7 @@ class ListingCreate(LoginRequiredMixin, CreateView):
   success_url = '/listings/'
 
   def form_valid(self, form):
-        # Assign the logged in user (self.request.user)
         form.instance.user = self.request.user
-        # Let the CreateView do its job as usual
         return super().form_valid(form)
 
 class ListingUpdate(LoginRequiredMixin, UpdateView):
@@ -70,17 +66,13 @@ class ListingDelete(LoginRequiredMixin, DeleteView):
   success_url = '/listings/'
 
 def add_photo(request, listing_id):
-    # photo-file will be the "name" attribute on the <input type="file">
     photo_file = request.FILES.get('photo-file', None)
     if photo_file:
         s3 = boto3.client('s3')
-        # need a unique "key" for S3 / needs image file extension too
         key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
-        # just in case something goes wrong
         try:
             bucket = os.environ['S3_BUCKET']
             s3.upload_fileobj(photo_file, bucket, key)
-            # build the full url string
             url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
             Photo.objects.create(url=url, listing_id=listing_id)
         except Exception as e:
@@ -99,7 +91,6 @@ def delete_photo(request, photo_id, listing_id):
   return redirect(reverse('edit_photos', args=(listing_id,)))
 
 def delete_comment(request, comment_id, listing_id):
-  # comment = get_object_or_404(Comment, comment=comment_id)
   if request.user.is_superuser:
     Comment.objects.get(pk=comment_id).delete()
 
@@ -108,20 +99,15 @@ def delete_comment(request, comment_id, listing_id):
 def signup(request):
   error_message = ''
   if request.method == 'POST':
-    # This is how to create a 'user' form object
-    # that includes the data from the browser
     form = UserCreationForm(request.POST)
     if form.is_valid():
-      # This will add the user to the database
       user = form.save()
       profile = Profile.objects.create(user_id=user.id)
       profile.save()
-      # This is how we log a user in via code
       login(request, user)
       return redirect('index')
     else:
       error_message = 'Invalid sign up - try again'
-  # A bad POST or a GET request, so render signup.html with an empty form
   form = UserCreationForm()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
@@ -145,8 +131,9 @@ def profile_save(request, profile_id):
   profile.country = request.POST.get("country")
   profile.save()
   return redirect(f'/profile/{request.user.id}')
-  
-  
+
+
+
 # gmaps
 def maps_sandbox(request):
   g_api_key = os.environ['GOOGLE_API_KEY']
@@ -156,13 +143,13 @@ def maps_sandbox(request):
   coordinates = geocode_result[0]["geometry"]["location"]
   lat = str(coordinates['lat'])
   lng = str(coordinates['lng'])
-  
+
   elements = []
   for i in geocode_result[0]["address_components"]:
     elements.append( i["long_name"] )
 
-  elements.append(lat) 
-  elements.append(lng) 
+  elements.append(lat)
+  elements.append(lng)
 
   full_address = ", ".join(elements)
 

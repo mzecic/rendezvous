@@ -88,7 +88,6 @@
       </div>
     </div>
   </div>
-
   <script>
 
 
@@ -102,18 +101,18 @@
       slideTime = 2000,
       activeClass = "active";
 
-  setInterval(() => {
-    indicatorItems.forEach(el => {
-      if (el.classList.contains(activeClass)) {
-        sib = el.nextElementSibling;
-        if (sib == null) {
-          indicatorItems[0].click();
-        } else {
-          sib.click()
+        setInterval(() => {
+        indicatorItems.forEach(el => {
+        if (el.classList.contains(activeClass)) {
+            sib = el.nextElementSibling;
+            if (sib == null) {
+            indicatorItems[0].click();
+            } else {
+            sib.click()
+            }
         }
-      }
-    });
-  }, slideTime);
+        });
+        }, slideTime);
 
 
 
